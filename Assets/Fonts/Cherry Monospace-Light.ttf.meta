@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 3d4fc059f98bbc84da32195daa1707d9
+timeCreated: 1499640670
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Cherry
+  fontNames:
+  - Cherry
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
