@@ -102,12 +102,18 @@ public class ItemView : MonoBehaviour {
 	}
 
 	public Item GetItem(){
-		Item ite = itemList[index];
-		itemList.RemoveAt(index);
-		return ite;
+		if(itemList.Count > 0){
+			Item ite = itemList[index];
+			itemList.RemoveAt(index);
+			return ite;
+		}else{
+			return null;
+		}
 	}
 
 	public void AddItem(Item i){
-		itemList.Add(i);
+		if(i!= null){
+			itemList.Add(i);
+		}
 	}
 }

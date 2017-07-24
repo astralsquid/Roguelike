@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//change
 public class Unit : MonoBehaviour {
 	List<Item> storage;
 	List<Item> equipped;
@@ -17,7 +17,12 @@ public class Unit : MonoBehaviour {
 	int currentSpeed;
 
 	public GameObject box;
-
+	public int GetLeftIndex(){
+		return leftEquipped;
+	}
+	public int GetRightIndex(){
+		return rightEquipped;
+	}
 	void Awake(){
 		speed = 10;
 		currentSpeed = speed;
@@ -63,9 +68,16 @@ public class Unit : MonoBehaviour {
 		}
 	}
 	public Item GetEquippedWeaponRight(){
+		Debug.Log("ER" + rightEquipped);
+		if(rightEquipped > equipped.Count - 1){
+			rightEquipped = 1;
+		}
 		return equipped[rightEquipped];
 	}
 	public Item GetEquippedWeaponLeft(){
+		if(leftEquipped > equipped.Count - 1){
+			leftEquipped = 0;
+		}
 		return equipped[leftEquipped];
 	}
 	public List<Item> GetEquipped(){
@@ -85,7 +97,6 @@ public class Unit : MonoBehaviour {
 	}
 	public void DropItemFromStorage(int i){
 		if(i<storage.Count){
-			Debug.Log("dropping item");
 			gameController.DropItem(storage[i], posX, posY);
 			storage.RemoveAt(i);
 		}
@@ -166,7 +177,10 @@ public class Unit : MonoBehaviour {
 		}
 		return false;
 	}
-
+	public void EquipInactive(){
+		leftEquipped = 0;
+		rightEquipped = 1;
+	}
 	public bool TickRight(){
 		rightEquipped += 1;
 		if(rightEquipped == 0){
@@ -184,14 +198,12 @@ public class Unit : MonoBehaviour {
 		return false;
 	}
 	public void TakeDamage(int dmg){
-		Debug.Log("taking damage");
 		hp -= dmg;
 		if(hp<1){
 			Die();
 		}
 	}
 	public void Die(){
-		Debug.Log("died");
 		gameController.SetUnit(null, posX, posY);
 		alive = false;
 	}

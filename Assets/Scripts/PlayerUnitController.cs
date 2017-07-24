@@ -25,6 +25,9 @@ public class PlayerUnitController : MonoBehaviour {
 
 	public GameObject inventoryPanel;
 
+	public Text invLeftText;
+	public Text invRightText;
+
 	// Use this for initialization
 	bool canMoveNorth = true;
 	bool canMoveSouth = true;
@@ -75,6 +78,8 @@ public class PlayerUnitController : MonoBehaviour {
 	}
 
 	void OpenInventory(){
+		invRightText.text = "Sack";
+		invLeftText.text = "Equipped";
 		baseItems = new List<Item>();
 		for(int i = 0; i<4; i++){
 			baseItems.Add(playerUnit.GetEquipped()[0]);
@@ -101,6 +106,14 @@ public class PlayerUnitController : MonoBehaviour {
 			gameController.DropItem(newItem, playerUnit.posX, playerUnit.posY);
 			storageView.SoftReset();
 		}else{
+			if(secondaryStorageView.GetCurrentIndex() == playerUnit.GetLeftIndex()-4){
+				playerUnit.EquipInactive();
+				FillUIReset();
+			}
+			if(secondaryStorageView.GetCurrentIndex() == playerUnit.GetRightIndex()-4){
+				playerUnit.EquipInactive();
+				FillUIReset();
+			}
 			Item newItem = secondaryStorageView.GetItem();
 			gameController.DropItem(newItem, playerUnit.posX, playerUnit.posY);
 			secondaryStorageView.SoftReset();
@@ -316,7 +329,10 @@ public class PlayerUnitController : MonoBehaviour {
 		playerUnit = u;
 		mainCameraScript.SetPlayerUnit(u);
 	}
-
+	public void FillUIReset(){
+		leftNonePanel.transform.position = leftPanel.transform.position;
+		rightNonePanel.transform.position = rightPanel.transform.position;
+	}
 	public void FillUI(){
 		Item leftWeapon = playerUnit.GetEquippedWeaponLeft();
 		if(leftWeapon.type != "none"){
@@ -337,8 +353,6 @@ public class PlayerUnitController : MonoBehaviour {
 		}else{
 			rightNonePanel.transform.position = rightPanel.transform.position;
 		}
-
-
 	}
 
 	public Unit GetPlayerUnit(){
